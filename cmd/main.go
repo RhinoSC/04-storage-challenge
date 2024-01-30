@@ -3,6 +3,7 @@ package main
 import (
 	"app/internal/application"
 	"fmt"
+	"os"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -10,16 +11,18 @@ import (
 func main() {
 	// env
 	// ...
+	// - database password
+	db_pwd := os.Getenv("DATABASE_PASSWORD")
 
 	// app
 	// - config
 	cfg := &application.ConfigApplicationDefault{
 		Db: &mysql.Config{
-			User:                 "root",
-			Passwd:               "",
-			Net:                  "tcp",
-			Addr:                 "localhost:3306",
-			DBName:               "fantasy_products",
+			User:   "root",
+			Passwd: db_pwd,
+			Net:    "tcp",
+			Addr:   "localhost:3306",
+			DBName: "fantasy_products",
 		},
 		Addr: "127.0.0.1:8080",
 	}
