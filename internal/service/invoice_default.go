@@ -24,3 +24,9 @@ func (s *InvoicesDefault) Save(i *internal.Invoice) (err error) {
 	err = s.rp.Save(i)
 	return
 }
+
+// UpdateAllTotal updates the total of all invoices base on sales and products.
+func (s *InvoicesDefault) UpdateAllTotal() (err error) {
+	err = s.rp.UpdateAllTotal()
+	return
+}
