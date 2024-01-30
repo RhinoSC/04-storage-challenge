@@ -44,10 +44,18 @@ func NewApplicationMigrate(config *ConfigApplicationMigrate) *ApplicationMigrate
 func (a *ApplicationMigrate) Close() {
 
 	// Close the files
-	a.CustomerFile.Close()
-	a.ProductFile.Close()
-	a.InvoiceFile.Close()
-	a.SaleFile.Close()
+	if a.CustomerFile != nil {
+		a.CustomerFile.Close()
+	}
+	if a.ProductFile != nil {
+		a.ProductFile.Close()
+	}
+	if a.InvoiceFile != nil {
+		a.InvoiceFile.Close()
+	}
+	if a.SaleFile != nil {
+		a.SaleFile.Close()
+	}
 
 	// close the database connection
 	a.database.Close()
@@ -86,8 +94,23 @@ func (a *ApplicationMigrate) SetUp() (err error) {
 	rpCustomer := repository.NewCustomersMySQL(a.database)
 	mgCustomer := migrator.NewMigratorCustomer(ldCustomer, rpCustomer)
 
+	ldInvoice := loader.NewInvoicesJSONFile(a.InvoiceFile)
+	rpInvoice := repository.NewInvoicesMySQL(a.database)
+	mgInvoice := migrator.NewMigratorInvoice(ldInvoice, rpInvoice)
+
+	ldProduct := loader.NewProductsJSONFile(a.ProductFile)
+	rpProduct := repository.NewProductsMySQL(a.database)
+	mgProduct := migrator.NewMigratorProduct(ldProduct, rpProduct)
+
+	ldSale := loader.NewSalesJSONFile(a.SaleFile)
+	rpSale := repository.NewSalesMySQL(a.database)
+	mgSale := migrator.NewMigratorSale(ldSale, rpSale)
+
 	a.migrators = []internal.Migrator{
 		mgCustomer,
+		mgInvoice,
+		mgProduct,
+		mgSale,
 	}
 	return
 }

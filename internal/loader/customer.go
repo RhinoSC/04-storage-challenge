@@ -34,7 +34,6 @@ func (c *CustomersJSONFile) Load() (customers []internal.Customer, err error) {
 		return
 	}
 
-	cus = make([]CustomerJSON, len(cus))
 	for _, v := range cus {
 		customers = append(customers, internal.Customer{
 			Id: v.Id,
