@@ -24,3 +24,9 @@ func (s *CustomersDefault) Save(c *internal.Customer) (err error) {
 	err = s.rp.Save(c)
 	return
 }
+
+// FindInvoicesByCondition returns the total from invoices by condition
+func (s *CustomersDefault) FindInvoicesByCondition() (c []internal.CustomerInvoicesByCondition, err error) {
+	c, err = s.rp.FindInvoicesByCondition()
+	return
+}

@@ -95,6 +95,9 @@ func (a *ApplicationDefault) SetUp() (err error) {
 		r.Get("/", hdCustomer.GetAll())
 		// - POST /customers
 		r.Post("/", hdCustomer.Create())
+		// - GET /customers/condition
+		r.Get("/condition", hdCustomer.GetInvoicesByCondition())
+
 	})
 	a.router.Route("/products", func(r chi.Router) {
 		// - GET /products

@@ -27,6 +27,7 @@ type CustomerJSON struct {
 	LastName  string `json:"last_name"`
 	Condition int    `json:"condition"`
 }
+
 // GetAll returns all customers
 func (h *CustomersDefault) GetAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -65,6 +66,7 @@ type RequestBodyCustomer struct {
 	LastName  string `json:"last_name"`
 	Condition int    `json:"condition"`
 }
+
 // Create creates a new customer
 func (h *CustomersDefault) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -104,6 +106,36 @@ func (h *CustomersDefault) Create() http.HandlerFunc {
 		response.JSON(w, http.StatusCreated, map[string]any{
 			"message": "customer created",
 			"data":    cs,
+		})
+	}
+}
+
+// GetInvoicesByCondition returns the total from invoices by condition
+func (h *CustomersDefault) GetInvoicesByCondition() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// request
+		// ...
+
+		// process
+		c, err := h.sv.FindInvoicesByCondition()
+		if err != nil {
+			log.Println(err)
+			response.Error(w, http.StatusInternalServerError, "error getting customers")
+			return
+		}
+
+		// response
+		// - serialize
+		csJSON := make([]internal.CustomerInvoicesByCondition, len(c))
+		for ix, v := range c {
+			csJSON[ix] = internal.CustomerInvoicesByCondition{
+				Condition: v.Condition,
+				Total:     v.Total,
+			}
+		}
+		response.JSON(w, http.StatusOK, map[string]any{
+			"message": "success",
+			"data":    csJSON,
 		})
 	}
 }

@@ -6,4 +6,7 @@ type ServiceCustomer interface {
 	FindAll() (c []Customer, err error)
 	// Save saves a customer
 	Save(c *Customer) (err error)
+
+	//FindInvoicesByCondition returns the total from invoices by condition
+	FindInvoicesByCondition() (c []CustomerInvoicesByCondition, err error)
 }

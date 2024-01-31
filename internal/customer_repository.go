@@ -6,4 +6,7 @@ type RepositoryCustomer interface {
 	FindAll() (c []Customer, err error)
 	// Save saves a customer into the database.
 	Save(c *Customer) (err error)
+
+	//FindInvoicesByCondition returns the total from invoices by condition
+	FindInvoicesByCondition() (c []CustomerInvoicesByCondition, err error)
 }
