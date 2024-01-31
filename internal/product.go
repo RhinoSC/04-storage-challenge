@@ -15,3 +15,10 @@ type Product struct {
 	// ProductAttributes is the attributes of the product.
 	ProductAttributes
 }
+
+type ProductTop5BySales struct {
+	// description is the description of the product.
+	Description string
+	// total is the total quantity of sales of the product.
+	Total int
+}

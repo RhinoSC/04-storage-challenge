@@ -24,3 +24,9 @@ func (s *ProductsDefault) Save(p *internal.Product) (err error) {
 	err = s.rp.Save(p)
 	return
 }
+
+// FindTop5BySales returns the top 5 products by quantity on sales.
+func (s *ProductsDefault) FindTop5BySales() (p []internal.ProductTop5BySales, err error) {
+	p, err = s.rp.FindTop5BySales()
+	return
+}
