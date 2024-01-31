@@ -139,3 +139,25 @@ func (h *CustomersDefault) GetInvoicesByCondition() http.HandlerFunc {
 		})
 	}
 }
+
+// FindTopByAmountSpent returns the top 10 customers by amount spent
+func (h *CustomersDefault) FindTopByAmountSpent() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// request
+		// ...
+
+		// process
+		c, err := h.sv.FindTopCustomersByAmountSpent()
+		if err != nil {
+			log.Println(err)
+			response.Error(w, http.StatusInternalServerError, "error getting customers")
+			return
+		}
+
+		// response
+		response.JSON(w, http.StatusOK, map[string]any{
+			"message": "success",
+			"data":    c,
+		})
+	}
+}

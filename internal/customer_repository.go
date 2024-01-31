@@ -9,4 +9,7 @@ type RepositoryCustomer interface {
 
 	//FindInvoicesByCondition returns the total from invoices by condition
 	FindInvoicesByCondition() (c []CustomerInvoicesByCondition, err error)
+
+	//FindTopCustomersByAmountSpent returns the top 5 customers by amount spent
+	FindTopCustomersByAmountSpent() (c []CustomerTopByAmountSpent, err error)
 }

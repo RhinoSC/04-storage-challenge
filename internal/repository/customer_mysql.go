@@ -95,3 +95,31 @@ func (r *CustomersMySQL) FindInvoicesByCondition() (c []internal.CustomerInvoice
 
 	return
 }
+
+// FindTopByAmountSpent returns the top 5 customers by amount spent.
+func (r *CustomersMySQL) FindTopCustomersByAmountSpent() (c []internal.CustomerTopByAmountSpent, err error) {
+	// execute the query
+	rows, err := r.db.Query("SELECT c.first_name, c.last_name, ROUND(SUM(i.total), 2) as `total` FROM customers c INNER JOIN invoices i ON c.id = i.customer_id WHERE c.`condition` = 1 GROUP BY c.first_name, c.last_name ORDER BY `total` DESC LIMIT 5;")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	// iterate over the rows
+	for rows.Next() {
+		var cs internal.CustomerTopByAmountSpent
+		// scan the row into the customer
+		err := rows.Scan(&cs.FirstName, &cs.LastName, &cs.Amount)
+		if err != nil {
+			return nil, err
+		}
+		// append the customer to the slice
+		c = append(c, cs)
+	}
+	err = rows.Err()
+	if err != nil {
+		return
+	}
+
+	return
+}

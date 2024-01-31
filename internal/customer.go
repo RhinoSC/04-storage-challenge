@@ -25,3 +25,9 @@ type CustomerInvoicesByCondition struct {
 	// Total is the total invoices by customer condition
 	Total float64
 }
+
+type CustomerTopByAmountSpent struct {
+	FirstName string
+	LastName  string
+	Amount    float64
+}

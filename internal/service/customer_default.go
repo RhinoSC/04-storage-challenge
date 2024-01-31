@@ -30,3 +30,9 @@ func (s *CustomersDefault) FindInvoicesByCondition() (c []internal.CustomerInvoi
 	c, err = s.rp.FindInvoicesByCondition()
 	return
 }
+
+// FindTopCustomersByAmountSpent returns the top 5 customers by amount spent
+func (s *CustomersDefault) FindTopCustomersByAmountSpent() (c []internal.CustomerTopByAmountSpent, err error) {
+	c, err = s.rp.FindTopCustomersByAmountSpent()
+	return
+}
